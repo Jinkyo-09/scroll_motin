@@ -8,10 +8,40 @@ secs.forEach((sec) => posArr.push(sec.offsetTop));
 
 //버튼 반복돌면서 이벤트 연결
 btns.forEach((btn, idx) => {
-	//각 버튼 클릭시 클릭한 순번의 세로 섹션 배열 위치값으로 스크롤 모션 이동
 	btn.addEventListener('click', () => {
 		new Anime(window, { scroll: posArr[idx] }, { duration: speed });
 	});
+});
+
+//브라우저 스크롤시 현재 스크롤 위치값이 특정 순번의 섹션 영역에 도달하면 해당 순번의 버튼 활성화
+window.addEventListener('scroll', () => {
+	const scroll = window.scrollY;
+
+	posArr.forEach((_, idx) => {
+		if (scroll >= posArr[idx]) {
+			btns.forEach((btn) => btn.classList.remove('on'));
+			btns[idx].classList.add('on');
+		}
+	});
+
+	/*
+	if (scroll >= posArr[0]) {
+		btns.forEach((btn) => btn.classList.remove('on'));
+		btns[0].classList.add('on');
+	}
+	if (scroll >= posArr[1]) {
+		btns.forEach((btn) => btn.classList.remove('on'));
+		btns[1].classList.add('on');
+	}
+	if (scroll >= posArr[2]) {
+		btns.forEach((btn) => btn.classList.remove('on'));
+		btns[2].classList.add('on');
+	}
+	if (scroll >= posArr[3]) {
+		btns.forEach((btn) => btn.classList.remove('on'));
+		btns[3].classList.add('on');
+	}
+  */
 });
 
 function splitText(selector, interval = 0, delay = 0) {
